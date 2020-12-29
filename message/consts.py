@@ -8,7 +8,7 @@ Usage:      from consts import <any const class>
 class PacketConsts:
     BYTE = 8
 
-    CODE_TO_TYPE = {
+    MESSAGE_TYPES = {
         100: 'INIT',
         101: 'ACCEPT',
         102: 'DENY',
@@ -18,8 +18,6 @@ class PacketConsts:
         50: 'TERMINATE',
         99: 'ERROR'
     }
-
-    TYPE_TO_CODE = {value: key for key, value in CODE_TO_TYPE.items()}
 
     PLAYERS = {
         0: 'SENDER',
@@ -33,9 +31,22 @@ class PacketConsts:
         3: 'WIN'
     }
 
-    ERRORS = {
+    ERROR_TYPES = {
         0: 'INVALID TYPE',
         1: 'INVALID OFFER',
         2: 'INVALID COORDINATES',
         3: 'INVALID ANSWER'
+    }
+
+
+class BuildConsts:
+    MESSAGE_TYPES = {value: key for key, value in PacketConsts.MESSAGE_TYPES.items()}
+
+    ERROR_TYPES = {value: key for key, value in PacketConsts.ERROR_TYPES.items()}
+
+    GENERAL_MESSAGE_TYPES = {
+        101: 'ACCEPT',
+        102: 'DENY',
+        103: 'READY',
+        50: 'TERMINATE'
     }

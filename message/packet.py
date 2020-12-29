@@ -28,7 +28,7 @@ class BP(Packet):
         represents the type of packet over the BP packet.
     """
     fields_desc = [
-        BitEnumField('TYPE', default=0, size=PacketConsts.BYTE, enum=PacketConsts.CODE_TO_TYPE)
+        BitEnumField('TYPE', default=0, size=PacketConsts.BYTE, enum=PacketConsts.MESSAGE_TYPES)
     ]
 
 
@@ -91,5 +91,5 @@ class ErrorPacket(Packet):
             3   -   'INVALID ANSWER'
     """
     fields_desc = [
-        BitEnumField('ERROR', default=0, size=PacketConsts.BYTE, enum=PacketConsts.ERRORS),
+        BitEnumField('ERROR', default=0, size=PacketConsts.BYTE, enum=PacketConsts.ERROR_TYPES),
     ]
