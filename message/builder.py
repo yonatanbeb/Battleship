@@ -12,7 +12,6 @@ from packet import BP, InitPacket, GuessPacket, ResponsePacket, ErrorPacket
 from consts import PacketConsts
 
 BPPacket = TCP
-# TODO: move this to more appropriate location when created
 bind_layers(TCP, BP, sport=1234, dport=1234)
 
 
