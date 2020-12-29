@@ -28,7 +28,7 @@ class BP(Packet):
         represents the type of packet over the BP packet.
     """
     fields_desc = [
-        BitEnumField('TYPE', default=0, size=PacketConsts.BYTE, enum=PacketConsts.CODE_TO_MESSAGE)
+        BitEnumField('TYPE', default=0, size=PacketConsts.BYTE, enum=PacketConsts.CODE_TO_TYPE)
     ]
 
 
