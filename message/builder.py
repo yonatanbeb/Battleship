@@ -5,7 +5,6 @@ Purpose:    Build a Battleship Protocol (BP) message out of the BP custom packet
 
 Usage:      from builder import MessageBuilder
 """
-from scapy.all import raw
 from packet import BP, InitPacket, GuessPacket, ResponsePacket, ErrorPacket
 from consts import PacketConsts, BuildConsts
 
@@ -160,18 +159,3 @@ class MessageBuilder:
 
     def _is_second_message(self, message_type):
         return (not self._previous_message_type) and (message_type == BuildConsts.MESSAGE_TYPES['INIT'])
-
-    def build_offer_message(self):
-        query = input('Do you want to play first? (y/n): ')
-        answer = 0 if query == 'y' else 1
-        message = self.init_builder.build(answer)
-        self._previous_message_type = 100
-        return raw(message)
-
-    def build_offer_response_message(self, first_player: bool):
-        offer = 'You are offered first player' if first_player else 'You are offered second player'
-        query = input(f'Do you accept the game?\n{offer}\n (y/n): ')
-        answer = 101 if query == 'y' else 102
-        message = self.general_builder.build(answer)
-        self._previous_message_type = answer
-        return raw(message)
