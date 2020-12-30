@@ -5,6 +5,7 @@ Purpose:    Build a Battleship Protocol (BP) message out of the BP custom packet
 
 Usage:      from builder import <any builder>
 """
+from scapy.all import raw
 from packet import BP, InitPacket, GuessPacket, ResponsePacket, ErrorPacket
 from consts import PacketConsts, BuildConsts
 
@@ -115,7 +116,7 @@ class MessageBuilder:
         self.guess_builder = guess_builder
         self.response_builder = response_builder
         self.error_builder = error_builder
-        self.previous_message = None
+        self._previous_message = None
         self.board = board
 
     def build(self, message=None) -> BP:
@@ -123,4 +124,8 @@ class MessageBuilder:
         Create a BP message according to the given message, <message>, and the message <previous_message>.
         :return:
         """
-        pass
+        if (not self._previous_message) and (not message):
+            message = self.init_builder.build()
+            return raw(message)
+
+
