@@ -103,3 +103,23 @@ class ErrorMessageBuilder:
     @staticmethod
     def valid(error: int):
         return error in PacketConsts.ERROR_TYPES
+
+
+class MessageBuilder:
+    """
+    Builder Composite
+    """
+    def __init__(self, general_builder, init_builder, guess_builder, response_builder, error_builder):
+        self.general_builder = general_builder
+        self.init_builder = init_builder
+        self.guess_builder = guess_builder
+        self.response_builder = response_builder
+        self.error_builder = error_builder
+        self.previous_message = None
+
+    def build(self, message: BP) -> BP:
+        """
+        Create a BP message according to the given message, <message>, and the message <previous_message>.
+        :return:
+        """
+        pass
