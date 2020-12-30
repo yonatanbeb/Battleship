@@ -3,10 +3,11 @@ Name:       builder.py
 
 Purpose:    Build a Battleship Protocol (BP) message out of the BP custom packets.
 
-Usage:      from builder import <any builder>
+Usage:      from builder import MessageBuilder
 """
 from scapy.all import raw
 from packet import BP, InitPacket, GuessPacket, ResponsePacket, ErrorPacket
+from message.parser import MessageParser
 from consts import PacketConsts, BuildConsts
 
 
@@ -110,13 +111,14 @@ class MessageBuilder:
     """
     Builder Composite
     """
-    def __init__(self, general_builder, init_builder, guess_builder, response_builder, error_builder, board):
+    def __init__(self, general_builder, init_builder, guess_builder, response_builder, error_builder, parser, board):
         self.general_builder = general_builder
         self.init_builder = init_builder
         self.guess_builder = guess_builder
         self.response_builder = response_builder
         self.error_builder = error_builder
         self._previous_message = None
+        self.parser = parser
         self.board = board
 
     def build(self, message=None) -> BP:
@@ -127,5 +129,7 @@ class MessageBuilder:
         if (not self._previous_message) and (not message):
             message = self.init_builder.build()
             return raw(message)
+        packet = self.parser.parse(message)
+
 
 

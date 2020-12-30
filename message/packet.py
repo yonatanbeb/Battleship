@@ -5,7 +5,7 @@ Purpose:    Classes of the Battleship Protocol (BP) custom packets.
 
 Usage:      from packet import Message
 """
-from scapy.all import Packet, BitField, BitEnumField
+from scapy.all import Packet, BitField, BitEnumField, raw
 
 from consts import PacketConsts
 
@@ -58,8 +58,8 @@ class GuessPacket(Packet):
           (0-9)   -   vertical coordinate
     """
     fields_desc = [
-        BitField('X', default=0, size=PacketConsts.BYTE / 2),
-        BitField('Y', default=0, size=PacketConsts.BYTE / 2),
+        BitField('X', default=0, size=PacketConsts.BYTE),
+        BitField('Y', default=0, size=PacketConsts.BYTE),
     ]
 
 
@@ -93,3 +93,10 @@ class ErrorPacket(Packet):
     fields_desc = [
         BitEnumField('ERROR', default=0, size=PacketConsts.BYTE, enum=PacketConsts.ERROR_TYPES),
     ]
+
+
+if __name__ == '__main__':
+    p = BP(TYPE=110) / GuessPacket(X=3, Y=4)
+    print(p.show())
+    q = raw(p)
+    print(GuessPacket(raw(BP(q).payload)).show())
