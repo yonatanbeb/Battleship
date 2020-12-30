@@ -47,7 +47,7 @@ class BattleshipBoard:
 		self.ships[name] = [(x, y + i) for i in range(size)] if axis == 'h' \
 			else [(x + i, y) for i in range(size)]
 
-	def handle_guess(self, x: int, y: int) -> int:
+	def answer(self, x: int, y: int) -> int:
 		if not self.valid_guess(x, y):
 			return -1
 		self.opponent_guesses.append((x, y))

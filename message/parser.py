@@ -27,3 +27,8 @@ class MessageParser:
 			return packet
 		else:
 			return PACKET_TYPES[packet.TYPE](raw(packet.payload))
+
+	@staticmethod
+	def parse_type(message: bytes) -> int:
+		packet = BP(message)
+		return packet.TYPE

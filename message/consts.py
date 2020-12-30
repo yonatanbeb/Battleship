@@ -52,6 +52,7 @@ class BuildConsts:
     }
 
     ACCEPTED_REPLY = {
+        None: (100, 101),
         100: (101, 102, 99),
         101: (103, ),
         102: (),

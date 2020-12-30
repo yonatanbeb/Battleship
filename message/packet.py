@@ -5,7 +5,7 @@ Purpose:    Classes of the Battleship Protocol (BP) custom packets.
 
 Usage:      from packet import Message
 """
-from scapy.all import Packet, BitField, BitEnumField, raw
+from scapy.all import Packet, BitField, BitEnumField
 
 from consts import PacketConsts
 
@@ -27,6 +27,7 @@ class BP(Packet):
     *   if a class is specified after the colon (:), then the field also
         represents the type of packet over the BP packet.
     """
+    name = 'BP'
     fields_desc = [
         BitEnumField('TYPE', default=0, size=PacketConsts.BYTE, enum=PacketConsts.MESSAGE_TYPES)
     ]
@@ -42,6 +43,7 @@ class InitPacket(Packet):
             1   -   RECIPIENT   :   The recipient will play first.
     *   The default is 0, meaning by default the initiator of the game begins.
     """
+    name = 'INIT'
     fields_desc = [
         BitEnumField('FIRST_PLAYER', default=0, size=PacketConsts.BYTE, enum=PacketConsts.PLAYERS),
     ]
@@ -57,6 +59,7 @@ class GuessPacket(Packet):
         Y:
           (0-9)   -   vertical coordinate
     """
+    name = 'GUESS'
     fields_desc = [
         BitField('X', default=0, size=PacketConsts.BYTE),
         BitField('Y', default=0, size=PacketConsts.BYTE),
@@ -74,6 +77,7 @@ class ResponsePacket(Packet):
             2   -   'SINK'
             3   -   'WIN'
     """
+    name = 'RESPONSE'
     fields_desc = [
         BitEnumField('ANSWER', default=0, size=PacketConsts.BYTE, enum=PacketConsts.RESPONSES),
     ]
@@ -90,13 +94,7 @@ class ErrorPacket(Packet):
             2   -   'INVALID COORDINATES'
             3   -   'INVALID ANSWER'
     """
+    name = 'ERROR'
     fields_desc = [
         BitEnumField('ERROR', default=0, size=PacketConsts.BYTE, enum=PacketConsts.ERROR_TYPES),
     ]
-
-
-if __name__ == '__main__':
-    p = BP(TYPE=110) / GuessPacket(X=3, Y=4)
-    print(p.show())
-    q = raw(p)
-    print(GuessPacket(raw(BP(q).payload)).show())
